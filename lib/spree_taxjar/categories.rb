@@ -18,7 +18,10 @@ module SpreeTaxjar
 
       def refresh
         p "Taxjar:: Categories:: API Call started !!"
-        client = ::Taxjar::Client.new(api_key: Spree::Config[:taxjar_api_key])
+        client = ::Taxjar::Client.new(
+          api_key: Spree::Config[:taxjar_api_key],
+          api_url: Spree::Config[:taxjar_production] ? Taxjar::API::Request::DEFAULT_API_URL : Taxjar::API::Request::SANDBOX_API_URL
+        )
         tax_categories = client.categories
         p "Taxjar:: Categories:: Update Started"
         update(tax_categories)

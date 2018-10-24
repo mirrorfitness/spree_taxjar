@@ -6,7 +6,10 @@ module Spree
       @order = order
       @shipment = shipment
       @reimbursement = reimbursement
-      @client = ::Taxjar::Client.new(api_key: Spree::Config[:taxjar_api_key])
+      @client = ::Taxjar::Client.new(
+        api_key: Spree::Config[:taxjar_api_key],
+        api_url: Spree::Config[:taxjar_production] ? Taxjar::API::Request::DEFAULT_API_URL : Taxjar::API::Request::SANDBOX_API_URL
+      )
     end
 
     def create_refund_transaction_for_order
