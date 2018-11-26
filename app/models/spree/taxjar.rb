@@ -3,12 +3,14 @@ module Spree
     attr_reader :client, :order, :reimbursement, :shipment
 
     def initialize(order = nil, reimbursement = nil, shipment = nil)
+      prod_url = ::Taxjar::API::Request::DEFAULT_API_URL
+      sandbox_url = ::Taxjar::API::Request::SANDBOX_API_URL
       @order = order
       @shipment = shipment
       @reimbursement = reimbursement
       @client = ::Taxjar::Client.new(
         api_key: Spree::Config[:taxjar_api_key],
-        api_url: Spree::Config[:taxjar_production] ? Taxjar::API::Request::DEFAULT_API_URL : Taxjar::API::Request::SANDBOX_API_URL
+        api_url: Spree::Config[:taxjar_production] ? prod_url : sandbox_url
       )
     end
 
