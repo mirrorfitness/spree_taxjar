@@ -203,7 +203,8 @@ module Spree
 
       def discount_weightage(item, unit_price)
         return 0 if @order.item_total.zero?
-        weightage = @order.adjustments.sum(:amount) / (@order.item_total)
+        taxable_item_total = @order.line_items.reduce(0) {|sum, li| sum + li.taxable_amount}
+        weightage = @order.adjustments.sum(:amount) / taxable_item_total
         - weightage * unit_price
       end
 
