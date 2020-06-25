@@ -127,7 +127,10 @@ module Spree
       end
 
       def reimbursement_present?
-        @client.list_refunds(from_transaction_date: Date.today - 1, to_transaction_date: Date.today + 1).include?(@reimbursement.number)
+        @client.list_refunds(
+          from_transaction_date: (Date.today - 1).to_s,
+          to_transaction_date: (Date.today + 1).to_s
+        ).include?(@reimbursement.number)
       end
 
       def group_by_line_items
