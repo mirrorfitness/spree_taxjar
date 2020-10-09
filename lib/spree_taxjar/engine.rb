@@ -19,6 +19,10 @@ module SpreeTaxjar
       end
     end
 
+    initializer "spree_taxjar.ignore_decorators" do
+      Rails.autoloaders.main.ignore(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb"))
+    end
+
     initializer 'spree.register.calculators' do |app|
       app.config.spree.calculators.tax_rates << Spree::Calculator::TaxjarCalculator
     end
