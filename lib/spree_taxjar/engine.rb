@@ -19,8 +19,9 @@ module SpreeTaxjar
       end
     end
 
-    initializer "spree_taxjar.ignore_decorators" do
-      Rails.autoloaders.main.ignore(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb"))
+    # https://github.com/spree/spree/issues/10497
+    initializer 'spree_taxjar.environment', before: 'spree.environment' do |app|
+      require File.join(File.dirname(__FILE__), '../../app/models/spree/app_configuration_decorator.rb')
     end
 
     initializer 'spree.register.calculators' do |app|
